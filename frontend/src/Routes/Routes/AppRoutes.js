@@ -6,6 +6,9 @@ import PublicationDetails from "../../Components/Pages/PublicationDetails/Public
 import Publications from "../../Components/Pages/Publications/Publications";
 import Statistics from "../../Components/Pages/Statistics/Statistics";
 import GuestRoute from "../Components/GuestRoute/GuestRoute";
+
+
+
 function AppRoutes() {
   return (
     <Routes>
