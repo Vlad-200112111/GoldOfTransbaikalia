@@ -79,12 +79,9 @@ function Publications() {
     async function createPublication(event){
         event.preventDefault()
         const formData = new FormData(event.target)
-        formData.append("image", file)
-        console.log(formData.get('image'))
-        const {data: result} = api.News.createNews(
-            formData
-        )
-        console.log(result)
+        formData.append("image_url", file)
+        const {data: result} = api.News.createNews(formData)
+        setShow(false)
     }
 
     function onChangeFile(event){

@@ -4,7 +4,7 @@ from rest_framework import permissions, viewsets, generics
 from rest_framework.parsers import MultiPartParser, FormParser
 
 
-class CreateNewAPIView(generics.CreateAPIView):
+class NewsCreateAPIView(generics.CreateAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
     permission_classes = (permissions.AllowAny,)
