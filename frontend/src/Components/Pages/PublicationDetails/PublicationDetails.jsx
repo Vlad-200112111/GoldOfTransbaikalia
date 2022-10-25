@@ -5,14 +5,19 @@ import publicationDetailsImg from '../../../Assets/Images/publication-details.jp
 import CreateComment from '../../UI/CreateComment/CreateComment';
 import PublicationsList from '../Publications/PublicationsList/PublicationsList';
 import PublicationComments from './PublicationComments/PublicationComments';
+import api from "../../../Services/api"
+import { useState } from 'react';
 function PublicationDetails({Publication}) {
     const params = useParams()
-    const Comments = [
-        {id: 0, user:{userId:1, name:"UserName", lastName:"UserLastName", potronymic: "UserPotronymic"}, comment:"comment", link:"/link"},
-        {id: 1, user:{userId:12, name:"UserName12", lastName:"UserLastName", potronymic: "UserPotronymic"}, comment:"comment", link:"/link"},
-        {id: 2, user:{userId:13, name:"UserName13", lastName:"UserLastName", potronymic: "UserPotronymic"}, comment:"comment", link:"/link"},
-        
-    ]
+    const [comments, setComments] = useState([])
+    const getComments = async (id) => {
+       const {data: Comments} = await api.Comments.getCommentsByNewsId(id)
+       return Comments
+    }
+    useEffect(()=>{
+        getComments(params.id).then(comments=>setComments(comments))
+    },[params.id])
+    
     const Publications = [
         {
           id: 0,
@@ -81,7 +86,7 @@ function PublicationDetails({Publication}) {
                                     </div>
                                     <section class="bg-light">
                                         <div class="container d-flex d-lg-flex flex-column flex-lg-row pb-4">
-                                            <PublicationComments Comments={Comments} />
+                                            <PublicationComments Comments={comments} />
                                             <CreateComment Publication={Publication} />                                                                                         
                                         </div>                                         
                                     </section>                                     
