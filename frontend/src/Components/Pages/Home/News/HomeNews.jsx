@@ -1,0 +1,23 @@
+import CustomPagination from "../../../UI/CustomPagination/CustomPagination";
+import HomeNewsItem from "./HomeNewsItem";
+
+function HomeNews({ News }) {
+  return (
+    <div>
+      <div className="bg-light rounded text-secondary">
+        <h5 className="bg-gradient bg-success fw-bold mb-0 pb-3 pe-2 ps-2 pt-3 text-uppercase text-white">
+          новости
+        </h5>
+        <div className="ps-3 pe-3">
+          {News?.map((NewsItem) => (
+            <HomeNewsItem NewsItem={NewsItem} />
+          ))}
+
+          <CustomPagination Pages={[1, 2, 3, 4, 5, 6]} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default HomeNews;
