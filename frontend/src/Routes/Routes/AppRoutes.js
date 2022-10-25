@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "../../Components/Pages/Home/Home";
 import Licenses from "../../Components/Pages/Licenses/Licenses";
+import Map from "../../Components/Pages/Map/Map";
 import PublicationDetails from "../../Components/Pages/PublicationDetails/PublicationDetails";
 import Publications from "../../Components/Pages/Publications/Publications";
 import Statistics from "../../Components/Pages/Statistics/Statistics";
@@ -49,6 +50,14 @@ function AppRoutes() {
         element={
           <GuestRoute>
             <Statistics />
+          </GuestRoute>
+        }
+      />
+      <Route
+        path="/map"
+        element={
+          <GuestRoute>
+            <Map />
           </GuestRoute>
         }
       />
