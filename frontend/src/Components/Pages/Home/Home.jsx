@@ -9,8 +9,18 @@ import logo3 from '../../../Assets/Images/logo-3.svg'
 import logo2 from '../../../Assets/Images/logo-2.svg'
 import logo4 from '../../../Assets/Images/logo-4.svg'
 import logo1 from '../../../Assets/Images/logo-1.svg'
+import {useEffect, useState} from "react";
+import api from "../../../Services/api";
 
 function Home() {
+    const [publications, setPublications] = useState([])
+
+    useEffect(async ()=>{
+        const {data: Publications} = await api.News.getListNews()
+        setPublications(Publications)
+    },[])
+
+
     const Comments = [
         {
             id: 0,
@@ -49,56 +59,7 @@ function Home() {
             link: "/link"
         }
     ]
-    const News = [
-        {
-            id: 0,
-            name: "Верхне-Алиинское месторождение",
-            created: "10 сентября 2022",
-            link: "/publication-details/0",
-            description: " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview: "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg"
-        },
-        {
-            id: 1,
-            name: "Верхне-Алиинское месторождение",
-            created: "12 сентября 2022",
-            link: "/publication-details/1",
-            description: " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview: "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg"
-        },
-        {
-            id: 2,
-            name: "Верхне-Алиинское месторождение",
-            created: "13 сентября 2022",
-            link: "/publication-details/2",
-            description: " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview: "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg"
-        },
-        {
-            id: 3,
-            name: "Верхне-Алиинское месторождение",
-            created: "14 сентября 2022",
-            link: "/publication-details/3",
-            description: " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview: "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg"
-        },
-        {
-            id: 4,
-            name: "Верхне-Алиинское месторождение",
-            created: "15 сентября 2022",
-            link: "/publication-details/4",
-            description: " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview: "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg"
-        },
-        {
-            id: 5,
-            name: "Верхне-Алиинское месторождение",
-            created: "16 сентября 2022",
-            link: "/publication-details/5",
-            description: " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview: "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg"
-        },
-    ]
+
     return (
         <>
             <column>
@@ -167,7 +128,7 @@ function Home() {
                     <section className="text-center">
                         <div className="container pt-3">
                             <div className="align-items-center justify-content-center g-0 row">
-                                <HomeNews News={News}/>
+                                <HomeNews publications={publications}/>
                             </div>
                         </div>
                     </section>

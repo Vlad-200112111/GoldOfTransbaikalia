@@ -1,7 +1,7 @@
 import CustomPagination from "../../../UI/CustomPagination/CustomPagination";
 import HomeNewsItem from "./HomeNewsItem";
 
-function HomeNews({ News }) {
+function HomeNews({ publications }) {
   return (
     <div>
       <div className="bg-light rounded text-secondary">
@@ -9,8 +9,8 @@ function HomeNews({ News }) {
           новости
         </h5>
         <div className="ps-3 pe-3">
-          {News?.map((NewsItem) => (
-            <HomeNewsItem NewsItem={NewsItem} />
+          {publications?.map((publicationsItem) => (
+            <HomeNewsItem publicationsItem={publicationsItem} />
           ))}
 
           <CustomPagination Pages={[1, 2, 3, 4, 5, 6]} />

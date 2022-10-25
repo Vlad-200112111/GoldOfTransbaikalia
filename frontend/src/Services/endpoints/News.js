@@ -8,7 +8,7 @@ const endpoints = {
             }
         }
     ),
-
+    getListNews: () => axios.get("news/")
 };
 
 export default endpoints;

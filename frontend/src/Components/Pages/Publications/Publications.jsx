@@ -1,7 +1,7 @@
 import PublicationsList from "./PublicationsList/PublicationsList";
 import ModalWindow from "../../UI/ModalWindow/ModalWindow";
 import Button from 'react-bootstrap/Button';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Form from 'react-bootstrap/Form';
 import CustomInput from "../../UI/CustomInput/CustomInput";
 import CustomInputFile from "../../UI/CustomInputFile/CustomInputFile";
@@ -10,71 +10,14 @@ import api from "../../../Services/api";
 function Publications() {
     const [show, setShow] = useState(false)
     const [file, setFile] = useState()
+    const [publications, setPublications] = useState([])
 
     const handleShow = () => setShow(!show)
 
-    const Publications = [
-        {
-            id: 0,
-            name: "Верхне-Алиинское месторождение",
-            created: "10 сентября 2022",
-            link: "/link",
-            description:
-                " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview:
-                "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg",
-        },
-        {
-            id: 1,
-            name: "Верхне-Алиинское месторождение",
-            created: "12 сентября 2022",
-            link: "/link",
-            description:
-                " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview:
-                "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg",
-        },
-        {
-            id: 2,
-            name: "Верхне-Алиинское месторождение",
-            created: "13 сентября 2022",
-            link: "/link",
-            description:
-                " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview:
-                "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg",
-        },
-        {
-            id: 3,
-            name: "Верхне-Алиинское месторождение",
-            created: "14 сентября 2022",
-            link: "/link",
-            description:
-                " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview:
-                "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg",
-        },
-        {
-            id: 4,
-            name: "Верхне-Алиинское месторождение",
-            created: "15 сентября 2022",
-            link: "/link",
-            description:
-                " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview:
-                "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg",
-        },
-        {
-            id: 5,
-            name: "Верхне-Алиинское месторождение",
-            created: "16 сентября 2022",
-            link: "/link",
-            description:
-                " Верхне-Алиинское золоторудное месторождение расположено на территории Балейского района в 30 км восточнее города Балей.",
-            preview:
-                "https://nedradv.ru/_files/db.biznes-gazeta.ru/8cfab8ca24e0d950ab29a01d55ca77fb/images/1C089B4B-C019-4FB0-B3114C5A3246DE7E.jpg",
-        },
-    ];
+    useEffect(async ()=>{
+        const {data: Publications} = await api.News.getListNews()
+        setPublications(Publications)
+    },[])
 
     async function createPublication(event){
         event.preventDefault()
@@ -153,7 +96,7 @@ function Publications() {
                     </div>
                 </form>
             </div>
-            <PublicationsList Publications={Publications}/>
+            <PublicationsList publications={publications}/>
         </>
     );
 }
