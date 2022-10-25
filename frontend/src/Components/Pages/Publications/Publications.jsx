@@ -14,12 +14,15 @@ function Publications() {
 
     const handleShow = () => setShow(!show)
 
-    useEffect(async ()=>{
-        const {data: Publications} = await api.News.getListNews()
-        setPublications(Publications)
-    },[])
+    const getPublications = async () => {
+        return await api.News.getListNews()
+    }
 
-    async function createPublication(event){
+    useEffect(() => {
+        getPublications().then((res) => setPublications(res.data))
+    }, [])
+
+    async function createPublication(event) {
         event.preventDefault()
         const formData = new FormData(event.target)
         formData.append("image_url", file)
@@ -27,7 +30,7 @@ function Publications() {
         setShow(false)
     }
 
-    function onChangeFile(event){
+    function onChangeFile(event) {
         setFile(event.target.files[0])
     }
 
@@ -58,7 +61,7 @@ function Publications() {
                     </>
                 }
                 functionForModalWindow={createPublication}
-                />
+            />
             <div class="container mt-4">
                 <Button className='btn btn-success' onClick={handleShow}>
                     Опубликовать новость

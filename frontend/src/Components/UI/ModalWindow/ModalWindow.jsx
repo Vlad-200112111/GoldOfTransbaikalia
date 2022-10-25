@@ -20,7 +20,7 @@ function ModalWindow({title, body, functionForModalWindow, titleButton, show, ha
                     }
                 </Modal.Body>
                 <Modal.Footer>
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" onClick={handleClose} className="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     {
                         titleButton !== "" &&
                         <button type="submit" className="btn btn-success">

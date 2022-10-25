@@ -15,9 +15,12 @@ import api from "../../../Services/api";
 function Home() {
     const [publications, setPublications] = useState([])
 
-    useEffect(async ()=>{
-        const {data: Publications} = await api.News.getListNews()
-        setPublications(Publications)
+    const getPublications = async () => {
+        return await api.News.getListNews()
+    }
+
+    useEffect( ()=>{
+        getPublications().then((res) => setPublications(res.data))
     },[])
 
 
