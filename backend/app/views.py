@@ -4,16 +4,10 @@ from rest_framework import permissions, viewsets, generics
 from rest_framework.parsers import MultiPartParser, FormParser
 
 
-class NewsCreateAPIView(viewsets.ModelViewSet):
-    queryset = News.objects.order_by('-creation_date')
+class CreateNewAPIView(generics.CreateAPIView):
+    queryset = News.objects.all()
     serializer_class = NewsSerializer
-    parser_classes = (MultiPartParser, FormParser)
-    permission_classes = [
-        permissions.AllowAny]
-
-    def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
-        
+    permission_classes = (permissions.AllowAny,)
 
 class NewsListAPIView(generics.ListAPIView):
     queryset = News.objects.all()
