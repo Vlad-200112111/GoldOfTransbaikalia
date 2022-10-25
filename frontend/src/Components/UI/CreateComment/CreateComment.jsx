@@ -6,7 +6,8 @@ function CreateComment({Publication}) {
   const [comment,setComment] = useState('')
   const CreateComment = async (e) =>{
       e.preventDefault()
-     await api.Comments.CreateComment({new:Publication.id, content: comment}).then(()=>{
+      console.log('hui')
+     await api.Comments.createComment({new:Publication.id, content: comment}).then(()=>{
       setName('')
       setComment('')
       setEmail('')

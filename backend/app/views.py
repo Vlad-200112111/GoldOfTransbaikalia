@@ -2,6 +2,7 @@ from .models import Comments, News
 from .serializers import CommentsSerializer, NewsSerializer
 from rest_framework import permissions, viewsets, generics
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.response import Response
 from .permissions import IsAuthorOrIsAuthenticated
 
 
@@ -32,8 +33,14 @@ class CommentsListAPIView(generics.ListAPIView):
     queryset = Comments.objects.all()
     serializer_class = CommentsSerializer
     permission_classes = (permissions.AllowAny,)
+    
+    def get(self, request, *args, **kwargs):
+        comments = Comments.objects.filter(new=kwargs.get('pk'))
+        return Response(CommentsSerializer(comments, many=True).data)
 
 class CommentsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = CommentsSerializer
     queryset = Comments.objects.all()
+    
+    
