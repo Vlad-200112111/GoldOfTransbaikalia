@@ -2,6 +2,11 @@ import CustomTable from "../../UI/CustomTable/CustomTable";
 
 function Licenses() {
     const TableHead = ['# лицензии', 'Название организации', '']
+    const TableRows = [
+      ['1,001', 'Рога и копыта'],
+      ['1,002', 'Золото Заб'],
+      ['1,003', 'Золото ПРО']
+    ]
   return (
     <>
       <h2 class="text-center">Лицензии</h2>
@@ -33,7 +38,20 @@ function Licenses() {
             </div>
           </div>
           <div class="table-responsive">
-            <CustomTable THead={TableHead}/>
+            <CustomTable THead={TableHead}>
+              {
+                TableRows.map(tr=>
+                  <tr>
+                    {tr.map(td=>
+                        <td>{td}</td>
+                      )}
+                       <td>
+                          <button type="button" class="btn btn-success">Подробнее</button>
+                       </td>
+                  </tr>
+                  )
+              }
+            </CustomTable>
           </div>
         </main>
       </div>
