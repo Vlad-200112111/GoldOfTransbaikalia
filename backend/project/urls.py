@@ -26,7 +26,6 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/news/", include("app.urls")),
     re_path(
         r"^api/v1/docs/$",
         schema_view.with_ui("swagger", cache_timeout=0),

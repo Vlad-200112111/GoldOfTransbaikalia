@@ -66,7 +66,7 @@ class News(models.Model):
         max_length=80, blank=False, null=False)
     caption = models.TextField(max_length=450)
     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
-    creation_date = models.DateTimeField()
+    creation_date = models.DateTimeField(auto_now=True)
 
     # class Meta:
     #     app_label = 'news'
@@ -77,7 +77,7 @@ class News(models.Model):
 class Comments(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=450)
-    creation_date = models.DateField()
+    creation_date = models.DateField(auto_now=True)
     new = models.ForeignKey(News, on_delete=models.CASCADE)
 
     # class Meta:
