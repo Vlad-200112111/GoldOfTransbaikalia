@@ -28,8 +28,8 @@ class NewsSerializer(serializers.ModelSerializer):
 
 class CommentsSerializer(serializers.ModelSerializer):
     content = serializers.CharField(required=True)
-    new = NewsSerializer(many=True, read_only=True)
+    new = serializers.SlugRelatedField(slug_field='id', queryset=News.objects)
 
     class Meta:
         model = Comments
-        fields = ['__all__']
+        fields = ['id','new', 'content']

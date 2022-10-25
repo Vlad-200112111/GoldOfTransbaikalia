@@ -61,7 +61,7 @@ def upload_to(instance, filename):
 
 class News(models.Model):
     title = models.CharField(
-        max_length=80, blank=False, null=False)
+        max_length=80, blank=False, null=False, db_index=True)
     caption = models.TextField(max_length=450)
     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now=True)
@@ -75,7 +75,7 @@ class News(models.Model):
 class Comments(models.Model):
     content = models.CharField(max_length=450)
     creation_date = models.DateField(auto_now=True)
-    new = models.ForeignKey(News, on_delete=models.CASCADE)
+    new = models.ForeignKey(to=News, on_delete=models.CASCADE)
 
     # class Meta:
     #     app_label = 'comments'

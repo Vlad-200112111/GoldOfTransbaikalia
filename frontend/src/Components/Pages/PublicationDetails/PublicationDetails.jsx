@@ -82,7 +82,7 @@ function PublicationDetails({Publication}) {
                                     <section class="bg-light">
                                         <div class="container d-flex d-lg-flex flex-column flex-lg-row pb-4">
                                             <PublicationComments Comments={Comments} />
-                                            <CreateComment />                                                                                         
+                                            <CreateComment Publication={Publication} />                                                                                         
                                         </div>                                         
                                     </section>                                     
                                 </div>                                 
