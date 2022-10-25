@@ -6,14 +6,13 @@ function DropDownMenu({ OuterElement, MenuList }) {
       <a
         href="#"
         className="d-block dropdown-toggle link-dark text-decoration-none"
-        id="dropdownUser1"
+        id="dropdownUser"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        {" "}
         {OuterElement}
       </a>
-      <ul className="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+      <ul className="dropdown-menu text-small" aria-labelledby="dropdownUser">
         {MenuList.map((item) => (
           <DropDownItem MenuItem={item} />
         ))}
