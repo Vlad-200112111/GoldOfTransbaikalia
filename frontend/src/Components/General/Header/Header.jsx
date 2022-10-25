@@ -9,7 +9,7 @@ function Header() {
     { id: 1, name: "Публикации", link: "/publications" },
     { id: 2, name: "Карта", link: "/map" },
     { id: 3, name: "Лицензии", link: "licenses" },
-    { id: 4, name: "Статистика", link: "statistic" },
+    { id: 4, name: "Статистика", link: "statistics" },
   ];
   const DropDowmList = [
     { id: 0, name: "Новая публикация +", link: "/create-publication" },

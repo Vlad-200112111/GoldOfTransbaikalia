@@ -1,9 +1,12 @@
 import CustomPagination from "../../../UI/CustomPagination/CustomPagination";
 import PublicatonsListItem from "./PublicationsListItem";
 
-function PublicationsList({ Publications }) {
+function PublicationsList({ Publications, Row=false }) {
   return (
-    <section class="bg-light text-secondary">
+    <>
+      {
+      !Row &&
+      <section class="bg-light text-secondary">
       <div class="container">
         <div class="ps-3 pe-3">
           {Publications?.map((publication) => (
@@ -13,6 +16,15 @@ function PublicationsList({ Publications }) {
         </div>
       </div>
     </section>
+    }
+    {
+      Row && 
+          Publications?.map((publication) => (
+            <PublicatonsListItem Row={Row} Publiction={publication} />
+          ))
+    }
+    </>
+    
   );
 }
 
