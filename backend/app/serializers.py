@@ -18,20 +18,15 @@ class UserCreateSerializer(UserCreateSerializer):
 
 
 class NewsSerializer(serializers.ModelSerializer):
-    creator = serializers.ReadOnlyField(source='creator.username')
-    creator_id = serializers.ReadOnlyField(source='creator.id')
     image_url = serializers.ImageField(required=False)
-    # creator = UserSerializer(many=True, read_only=True)
     creation_date = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = News
-        fields = ['id', 'creator', 'creator_id', 'title', 'caption', 'image_url', 'creation_date']
+        fields = ['id', 'title', 'caption', 'image_url', 'creation_date']
 
 
 class CommentsSerializer(serializers.ModelSerializer):
-    creator = serializers.ReadOnlyField(source='creator.username')
-    creator_id = serializers.ReadOnlyField(source='creator.id')
     content = serializers.CharField(required=True)
     new = NewsSerializer(many=True, read_only=True)
 

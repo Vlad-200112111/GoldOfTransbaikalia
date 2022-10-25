@@ -60,8 +60,6 @@ def upload_to(instance, filename):
     return 'images/{filename}'.format(filename=filename)
 
 class News(models.Model):
-    creator = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="listings")
     title = models.CharField(
         max_length=80, blank=False, null=False)
     caption = models.TextField(max_length=450)
@@ -75,7 +73,6 @@ class News(models.Model):
         return self.title
 
 class Comments(models.Model):
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=450)
     creation_date = models.DateField(auto_now=True)
     new = models.ForeignKey(News, on_delete=models.CASCADE)

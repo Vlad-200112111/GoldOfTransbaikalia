@@ -1,7 +1,7 @@
-import AuthorizationServices from "./endpoints/AuthorizationServices";
+import News from "./endpoints/News";
 
 const allEndpoints = {
-    AuthorizationServices,
+    News,
 };
 
 export default allEndpoints;

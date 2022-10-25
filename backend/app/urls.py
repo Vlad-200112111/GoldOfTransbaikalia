@@ -5,7 +5,7 @@ from .views import NewsCreateAPIView, NewsListAPIView, NewsDetailAPIView
 app_name = "app"
 
 urlpatterns = [
-    path("news/create/", NewsCreateAPIView.as_view()),
+    path("news/create/", NewsCreateAPIView.as_view({'get': 'list'})),
     path("news/", NewsListAPIView.as_view()),
     path("news/<int:pk>", NewsDetailAPIView.as_view()),
 ]
