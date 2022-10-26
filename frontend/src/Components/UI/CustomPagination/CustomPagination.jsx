@@ -1,6 +1,12 @@
 import PaginationItem from "./CustomPaginationitem";
 
-function CustomPagination({ Pages, NextFunction, PrevFunction, setPage, currentPage }) {
+function CustomPagination({
+  Pages,
+  NextFunction,
+  PrevFunction,
+  setPage,
+  currentPage,
+}) {
   return (
     <nav
       aria-label="Page navigation example"
@@ -14,10 +20,16 @@ function CustomPagination({ Pages, NextFunction, PrevFunction, setPage, currentP
           </i>
         </li>
         {Pages?.map((page) => (
-          <PaginationItem className={currentPage === page? 'current-page page-link' : "page-link"} onClick={()=>setPage(page)} Page={page} />
+          <PaginationItem
+            className={
+              currentPage === page ? "current-page page-link" : "page-link"
+            }
+            onClick={() => setPage(page)}
+            Page={page}
+          />
         ))}
         <li className="page-item" onClick={NextFunction}>
-          <i className="page-link" aria-label="Next" >
+          <i className="page-link" aria-label="Next">
             {" "}
             <span aria-hidden="true">&raquo;</span>{" "}
           </i>
