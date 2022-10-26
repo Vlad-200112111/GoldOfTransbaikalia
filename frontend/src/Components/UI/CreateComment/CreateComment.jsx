@@ -1,18 +1,20 @@
-import React,{ useState } from "react";
-import api from '../../../Services/api'
-function CreateComment({Publication}) {
-  const [name,setName] = useState('')
-  const [email,setEmail] = useState('')
-  const [comment,setComment] = useState('')
-  const CreateComment = async (e) =>{
-      e.preventDefault()
-      console.log('hui')
-     await api.Comments.createComment({new:Publication.id, content: comment}).then(()=>{
-      setName('')
-      setComment('')
-      setEmail('')
-     })
-  }
+import React, { useState } from "react";
+import api from "../../../Services/api";
+function CreateComment({ Publication }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
+  const CreateComment = async (e) => {
+    e.preventDefault();
+    await api.Comments.createComment({
+      new: Publication.id,
+      content: comment,
+    }).then(() => {
+      setName("");
+      setComment("");
+      setEmail("");
+    });
+  };
   return (
     <div class="col-12 col-lg-6">
       <div class="p-3">
@@ -28,7 +30,7 @@ function CreateComment({Publication}) {
                 class="form-control rounded-0"
                 id="inputName"
                 value={name}
-                onChange={(ev)=>setName(ev.target.value)}
+                onChange={(ev) => setName(ev.target.value)}
                 placeholder="Введите имя"
               />
             </div>
@@ -41,7 +43,7 @@ function CreateComment({Publication}) {
                 class="form-control rounded-0"
                 id="inputEmail"
                 value={email}
-                onChange={(ev)=>setEmail(ev.target.value)}
+                onChange={(ev) => setEmail(ev.target.value)}
                 placeholder="Введите email..."
               />
             </div>
@@ -55,12 +57,13 @@ function CreateComment({Publication}) {
               rows="6"
               id="inputTextarea"
               value={comment}
-              onChange={(ev)=>setComment(ev.target.value)}
+              onChange={(ev) => setComment(ev.target.value)}
               placeholder="Ваш комментарий..."
             ></textarea>
           </div>
           <div class="text-end">
-            <button onClick={CreateComment}
+            <button
+              onClick={CreateComment}
               type="submit"
               class="bg-success btn pe-4 ps-4 rounded-0 rounded-pill text-light text-uppercase"
             >
