@@ -8,7 +8,8 @@ const endpoints = {
             }
         }
     ),
-    getListNews: () => axios.get("news/")
+    getListNews: () => axios.get("news/"),
+    getNewsById: (id) => axios.get(`news/${id}`),
 };
 
 export default endpoints;
