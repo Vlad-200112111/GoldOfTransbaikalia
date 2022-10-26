@@ -6,25 +6,55 @@ import Form from 'react-bootstrap/Form';
 import CustomInput from "../../UI/CustomInput/CustomInput";
 import CustomInputFile from "../../UI/CustomInputFile/CustomInputFile";
 import api from "../../../Services/api";
+import CustomPagination from "../../UI/CustomPagination/CustomPagination";
 
 function Publications() {
     const [show, setShow] = useState(false)
     const [file, setFile] = useState()
     const [publications, setPublications] = useState([])
+    const [pages, setPages] = useState([])
+    const [limit, setLimit] = useState(20)
+    const [page, setPage] = useState(1)
+
+    
+    useEffect(()=>{
+        getPublications(page).then(Publications=>
+        {
+            setPublications(Publications)
+            setPages(Array.from({length: Math.ceil(Publications.count/limit)}, (_, i) => i + 1))
+        })
+        
+    },[page])
 
     const handleShow = () => setShow(!show)
-
-    useEffect(async ()=>{
-        const {data: Publications} = await api.News.getListNews()
-        setPublications(Publications)
-    },[])
+    const getPublications = async (page)=>{
+        const {data: Publications} = await api.News.getListNews(page)
+        return Publications
+    }
+    const next = () => {
+        if (publications.next){
+            setPage(page+1)
+        }
+    }
+    const prev = () => {
+        if (publications.previous)
+            {
+                    setPage(page-1)
+            }
+    }
 
     async function createPublication(event){
+        console.log(page)
         event.preventDefault()
         const formData = new FormData(event.target)
         formData.append("image_url", file)
-        const {data: result} = api.News.createNews(formData)
-        setShow(false)
+        const {data: result} = api.News.createNews(formData).then(()=>{
+            getPublications(page).then(Publications=>setPublications(Publications))
+            setPages(Array.from({length: Math.ceil(publications.count/limit)}, (_, i) => i + 1))
+
+
+        })
+        // setShow(false)
     }
 
     function onChangeFile(event){
@@ -96,7 +126,9 @@ function Publications() {
                     </div>
                 </form>
             </div>
-            <PublicationsList publications={publications}/>
+            <PublicationsList publications={publications.results} >
+            <CustomPagination currentPage={page} setPage={setPage} NextFunction={next} PrevFunction={prev} Pages={pages}/>    
+            </PublicationsList>
         </>
     );
 }

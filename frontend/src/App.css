@@ -42,6 +42,11 @@ body{
 }
 .page-link {
   color: #198754 !important;
+  cursor: pointer;
+}
+.current-page{
+  color: #fff !important;
+  background-color: #198754 !important;
 }
 
 @keyframes App-logo-spin {

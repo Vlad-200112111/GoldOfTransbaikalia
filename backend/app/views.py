@@ -17,6 +17,15 @@ class NewsListAPIView(generics.ListAPIView):
     serializer_class = NewsSerializer
     permission_classes = (permissions.AllowAny,)
 
+class NewsListLimitAPIView(generics.ListAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        news = News.objects.all()[:kwargs.get('limit')]
+        return Response(NewsSerializer(news, many=True).data)
+
 class NewsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = NewsSerializer

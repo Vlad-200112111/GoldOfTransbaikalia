@@ -8,7 +8,9 @@ const endpoints = {
             }
         }
     ),
-    getListNews: () => axios.get("news/"),
+    getListNews: (page) => axios.get(`news/?page=${page}`),
+    getListNewsByLimit: (limit) => axios.get(`news/limit=${limit}`),
+    
     getNewsById: (id) => axios.get(`news/${id}`),
 };
 

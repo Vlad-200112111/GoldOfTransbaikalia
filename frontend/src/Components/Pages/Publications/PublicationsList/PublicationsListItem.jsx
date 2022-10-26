@@ -5,11 +5,12 @@ function PublicatonsListItem({publiction, Row}) {
         <>
             {!Row && (
                 <div class="d-lg-flex flex-lg-row pb-3 pt-3">
-                    <div class="bg-white d-lg-flex flex-lg-row shadow">
+                    <div  class="bg-white w-100 d-lg-flex flex-lg-row shadow">
                         <img
                             src={publiction.image_url}
                             alt="..."
-                            class="image-fit-center-center img-fluid w-50"
+                            style={{maxWidth:'50%', maxHeight:'250px'}}
+                            class="image-fit-center-center img-fluid"
                         />
                         <div class="p-3">
                             {" "}

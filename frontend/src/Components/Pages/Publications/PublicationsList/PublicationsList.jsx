@@ -1,7 +1,8 @@
+import { Children } from "react";
 import CustomPagination from "../../../UI/CustomPagination/CustomPagination";
 import PublicatonsListItem from "./PublicationsListItem";
 
-function PublicationsList({publications, Row = false}) {
+function PublicationsList({publications, Row = false, children }) {
     return (
         <>
             {
@@ -15,7 +16,7 @@ function PublicationsList({publications, Row = false}) {
                                     )
                                 )
                             }
-                            <CustomPagination Pages={[1, 2, 3, 4, 5, 6]}/>
+                            {children}
                         </div>
                     </div>
                 </section>

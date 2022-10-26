@@ -9,15 +9,22 @@ import logo3 from '../../../Assets/Images/logo-3.svg'
 import logo2 from '../../../Assets/Images/logo-2.svg'
 import logo4 from '../../../Assets/Images/logo-4.svg'
 import logo1 from '../../../Assets/Images/logo-1.svg'
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import api from "../../../Services/api";
 
 function Home() {
     const [publications, setPublications] = useState([])
+    const [pages, setPages] = useState([])
+    const [limit, setLimit] = useState(2)
+    const [page, setPage] = useState(1)
 
-    useEffect(async ()=>{
-        const {data: Publications} = await api.News.getListNews()
-        setPublications(Publications)
+    const getNews = async (limit) =>{
+        const {data: Publications} = await api.News.getListNewsByLimit(limit)
+        return Publications
+    }
+
+    useEffect(()=>{
+        getNews(5).then((Publications)=>setPublications(Publications))
     },[])
 
 
