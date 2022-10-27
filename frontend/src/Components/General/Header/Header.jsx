@@ -7,6 +7,7 @@ import CustomInput from "../../UI/CustomInput/CustomInput";
 import CustomInputFile from "../../UI/CustomInputFile/CustomInputFile";
 import Button from 'react-bootstrap/Button';
 import api from "../../../Services/api";
+import {Link} from "react-router-dom";
 
 function Header() {
     const [authentication, setAuthentication] = useState(false)
@@ -78,9 +79,16 @@ function Header() {
                                 MenuList={DropDowmList}
                             />
                             :
-                            <Button className='btn btn-success' onClick={handleShow}>
-                                Войти
-                            </Button>
+                            <>
+                                <Button className='btn btn-success' onClick={handleShow}>
+                                    Войти
+                                </Button>
+                                <Link className="baseLink" to={`/sign-up`}>
+                                    <Button className='btn btn-success'>
+                                        Регистрация
+                                    </Button>
+                                </Link>
+                            </>
                     }
                 </div>
             </div>

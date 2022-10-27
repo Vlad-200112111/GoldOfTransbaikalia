@@ -66,7 +66,7 @@ class News(models.Model):
     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now=True)
     publication = models.BooleanField(default=False)
-
+    html = models.TextField(null=False)
     # class Meta:
     #     app_label = 'news'
 

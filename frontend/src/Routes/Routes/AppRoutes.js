@@ -8,6 +8,7 @@ import Publications from "../../Components/Pages/Publications/Publications";
 import Statistics from "../../Components/Pages/Statistics/Statistics";
 import GuestRoute from "../Components/GuestRoute/GuestRoute";
 import Registration from "../../Components/Pages/Registration/Registration";
+import UserActivation from "../../Components/Pages/UserActivation/UserActivation";
 
 
 function AppRoutes() {
@@ -22,10 +23,10 @@ function AppRoutes() {
                 }
             />
             <Route
-                path="/sign-in"
+                path="/user-activation"
                 element={
                     <GuestRoute>
-                        <Home/>
+                        <UserActivation/>
                     </GuestRoute>
                 }
             />

@@ -1,11 +1,13 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 
-function CustomInput({name, type, title, helper, typeInput = "input"}) {
+function CustomInput({name, type, title, helper, typeInput = "input", required = false, disabled = false}) {
     return (
         <div className="m-2">
             <Form.Floating>
                 <Form.Control
+                    disabled={disabled}
+                    required={required}
                     name={name}
                     id={`${name}_id`}
                     type={type}
