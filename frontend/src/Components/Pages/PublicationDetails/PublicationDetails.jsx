@@ -12,6 +12,7 @@ function PublicationDetails() {
   const params = useParams();
   const [comments, setComments] = useState([]);
   const [Publication, setPublication] = useState([]);
+  const [Publications, setPublications] = useState([]);
   const [pages, setPages] = useState([]);
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
@@ -19,10 +20,14 @@ function PublicationDetails() {
     const { data: Comments } = await api.Comments.getCommentsByNewsId(id, page);
     return Comments;
   };
-  const getNews = async (id) => {
+  const getNewsById = async (id) => {
     const { data: News } = await api.News.getNewsById(id);
     return News;
   };
+  const getNewsByLimit = async (limit) =>{
+    const {data: Publications} = await api.News.getListNewsByLimit(limit)
+    return Publications
+}
   useEffect(() => {
     getComments(params.id, page).then((comments) => {
       setComments(comments);
@@ -33,9 +38,10 @@ function PublicationDetails() {
         )
       );
     });
-    getNews(params.id).then((news) => {
+    getNewsById(params.id).then((news) => {
       setPublication(news);
     });
+    getNewsByLimit(3).then(Publications=>setPublications(Publications))
   }, [params.id, page]);
 
   const next = () => {
@@ -60,7 +66,7 @@ function PublicationDetails() {
                   <h4 class="bg-gradient bg-success fw-bold mb-0 pb-3 pe-2 ps-2 pt-3 text-uppercase text-white">
                     {Publication?.title}
                   </h4>
-                  <p class="text-dark">{Publication?.creation_date}</p>
+                  <p class="text-dark">{Publication?.creation_date?.slice(0,Publication?.creation_date.lastIndexOf('T'))}</p>
                   <div class="ps-3 pe-3">
                     <div class="container pb-4">
                       <div class="row">
@@ -71,11 +77,10 @@ function PublicationDetails() {
                               style={{
                                 float: "left",
                                 margin: "7px 50px 7px 0",
+                                maxWidth: "50%"
                               }}
                               class="img-fluid"
                               alt="..."
-                              width="540"
-                              height="360"
                             />
                             {Publication?.caption}
                           </p>
@@ -118,7 +123,7 @@ function PublicationDetails() {
                 К другим новостям
               </h4>
 
-              <PublicationsList Row />
+              <PublicationsList Row publications={Publications.results} />
             </div>
           </div>
         </section>

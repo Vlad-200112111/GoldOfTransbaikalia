@@ -10,6 +10,8 @@ import CustomPagination from "../../UI/CustomPagination/CustomPagination";
 
 function Publications() {
   const [show, setShow] = useState(false);
+  const [searchValueByTitle, setSearchValueByTitle] = useState("");
+  const [searchValueByCaption, setSearchValueByCaption] = useState("");
   const [file, setFile] = useState();
   const [publications, setPublications] = useState([]);
   const [pages, setPages] = useState([]);
@@ -27,6 +29,23 @@ function Publications() {
       );
     });
   }, [page]);
+
+  const search = async () => {
+    await api.News.getNewsByFilter(
+      searchValueByTitle,
+      searchValueByCaption
+      ).then((Publications) => {
+      console.log(Publications);
+      setPublications(Publications.data);
+      setPages(
+        Array.from(
+          { length: Math.ceil(Publications.data.count / limit) },
+          (_, i) => i + 1
+        )
+      );
+      setPage(1);
+    });
+  };
 
   const handleShow = () => setShow(!show);
   const getPublications = async (page) => {
@@ -76,8 +95,9 @@ function Publications() {
         handleClose={handleShow}
         body={
           <>
-            <CustomInput type={"text"} title={"Название"} name={"title"} />
+            <CustomInput type={"text"} title={"Название"} maxLength={'80'} name={"title"} />
             <CustomInput
+              maxLength={'3000'}
               type={"text"}
               title={"Описание"}
               name={"caption"}
@@ -94,30 +114,27 @@ function Publications() {
         </Button>
         <form class="d-flex flex-column">
           <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">
-              Поиск по месторождению
-            </label>
-            <input
-              type="email"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="Дарасунский"
+            <CustomInput
+              value={searchValueByTitle}
+              onChange={(ev) => setSearchValueByTitle(ev.target.value)}
+              type={"text"}
+              title={"Поиск по месторождению"}
+              name={"title"}
             />
           </div>
           <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">
-              Поиск по совпадению в тексте
-            </label>
-            <input
-              type="email"
-              class="form-control"
-              id="exampleFormControlSelect1"
-              placeholder="реки"
+            <CustomInput
+              value={searchValueByCaption}
+              onChange={(ev) => setSearchValueByCaption(ev.target.value)}
+              type={"text"}
+              title={"Поиск по совпадению в тексте"}
+              name={"title"}
             />
           </div>
           <div class="d-flex justify-content-end">
             <button
               type="button"
+              onClick={search}
               class="btn btn-success d-flex justify-content-center m-2 w-25"
             >
               Поиск

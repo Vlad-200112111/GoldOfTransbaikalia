@@ -62,7 +62,7 @@ def upload_to(instance, filename):
 class News(models.Model):
     title = models.CharField(
         max_length=80, blank=False, null=False, db_index=True)
-    caption = models.TextField(max_length=450)
+    caption = models.TextField(max_length=3500)
     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now=True)
     publication = models.BooleanField(default=False)
