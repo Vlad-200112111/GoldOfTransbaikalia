@@ -37,7 +37,7 @@ function PublicatonsListItem({publication, Row}) {
                         <div class="bg-white shadow">
                             <Link className="baseLink" to={`/publication-details/${publication?.id}`}>
                                 <img
-                                    src={'http://127.0.0.1:8000'+publication?.image_url}
+                                    src={publication?.image_url}
                                     class="img-fluid w-100"
                                     alt="..."
                                     width="700"

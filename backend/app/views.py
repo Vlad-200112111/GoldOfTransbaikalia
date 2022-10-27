@@ -18,14 +18,13 @@ class NewsListAPIView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
 
 class NewsListLimitAPIView(generics.ListAPIView):
-    queryset = News.objects.all()
     serializer_class = NewsSerializer
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request, *args, **kwargs):
-        news = News.objects.all()[:kwargs.get('limit')]
-        results = self.paginate_queryset(news)
-        return self.get_paginated_response(NewsSerializer(results, many=True).data) 
+    def get_queryset(self):
+        queryset = News.objects.all()
+        queryset = queryset.all()[:int(self.request.query_params.get('limit'))]
+        return queryset
 
 class NewsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.AllowAny,)

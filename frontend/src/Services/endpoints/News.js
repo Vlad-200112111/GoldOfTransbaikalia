@@ -8,7 +8,7 @@ const endpoints = {
       },
     }),
   getListNews: (page) => axios.get(`news/?page=${page}`),
-  getListNewsByLimit: (limit) => axios.get(`news/limit=${limit}`),
+  getListNewsByLimit: (limit) => axios.get(`news/limit/?limit=${limit}`),
   getNewsByFilter: (
     title = "",
     caption = "",
