@@ -30,6 +30,7 @@ function CreateComment({ Publication }) {
                 class="form-control rounded-0"
                 id="inputName"
                 value={name}
+                maxLength={80}
                 onChange={(ev) => setName(ev.target.value)}
                 placeholder="Введите имя"
               />
@@ -39,6 +40,7 @@ function CreateComment({ Publication }) {
                 Email
               </label>
               <input
+                maxLength={100}
                 type="email"
                 class="form-control rounded-0"
                 id="inputEmail"
@@ -57,6 +59,7 @@ function CreateComment({ Publication }) {
               rows="6"
               id="inputTextarea"
               value={comment}
+              maxLength={400}
               onChange={(ev) => setComment(ev.target.value)}
               placeholder="Ваш комментарий..."
             ></textarea>

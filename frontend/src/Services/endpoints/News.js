@@ -1,17 +1,22 @@
 import axios from "../axios/axios";
 
-
 const endpoints = {
-    createNews: (data) => axios.post("news/create/", data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }
+  createNews: (data) =>
+    axios.post("news/create/", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  getListNewsByLimit: (limit) => axios.get(`news/limit/?limit=${limit}`),
+  getNews: (options) =>
+    axios.get(
+      `news/?title=${options.title || ""}&caption=${
+        options?.caption || ""
+      }&creation_date=${options?.creation_date || ""}&publication=${
+        options?.publication || ""
+      }&page=${options?.page || 1}`
     ),
-    getListNews: (page) => axios.get(`news/?page=${page}`),
-    getListNewsByLimit: (limit) => axios.get(`news/limit=${limit}`),
-    
-    getNewsById: (id) => axios.get(`news/${id}`),
+  getNewsById: (id) => axios.get(`news/${id}`),
 };
 
 export default endpoints;

@@ -12,25 +12,37 @@ class NewsCreateAPIView(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
     
 
-class NewsListAPIView(generics.ListAPIView):
-    queryset = News.objects.all()
-    serializer_class = NewsSerializer
-    permission_classes = (permissions.AllowAny,)
+# class NewsListAPIView(generics.ListAPIView):
+#     queryset = News.objects.all()
+#     serializer_class = NewsSerializer
+#     permission_classes = (permissions.AllowAny,)
 
 class NewsListLimitAPIView(generics.ListAPIView):
-    queryset = News.objects.all()
     serializer_class = NewsSerializer
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request, *args, **kwargs):
-        news = News.objects.all()[:kwargs.get('limit')]
-        results = self.paginate_queryset(news)
-        return self.get_paginated_response(NewsSerializer(results, many=True).data) 
+    def get_queryset(self):
+        queryset = News.objects.all()
+        queryset = queryset.all()[:int(self.request.query_params.get('limit'))]
+        return queryset
 
 class NewsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = NewsSerializer
     queryset = News.objects.all()
+
+class NewsListSearchAPIView(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = NewsSerializer
+    def get_queryset(self):
+        queryset = News.objects.all()
+        title = self.request.query_params.get('title') if self.request.query_params.get('title') is not None else ''
+        caption = self.request.query_params.get('caption') if self.request.query_params.get('caption') is not None else ''
+        creation_date = self.request.query_params.get('creation_date') if self.request.query_params.get('creation_date') is not None else ''
+        publication = self.request.query_params.get('publication') if self.request.query_params.get('publication') is not None else ''
+        queryset = queryset.filter(title__contains=title, caption__contains=caption, creation_date__contains=creation_date, publication__contains=publication)
+        return queryset
+
 
 
 class CommentsCreateAPIView(generics.CreateAPIView):
@@ -56,7 +68,7 @@ class CommentsListLimitAPIView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request, *args, **kwargs):
-        comments = Comments.objects.all()[:kwargs.get('limit')]
+        comments = Comments.objects.all()[:int(request.query_params.get('limit'))]
         results = self.paginate_queryset(comments)
         return self.get_paginated_response(CommentsSerializer(results, many=True).data) 
 

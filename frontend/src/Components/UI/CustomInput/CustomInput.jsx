@@ -1,12 +1,13 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 
+function CustomInput({name, type, title, helper, typeInput = "input", ...restProps}) {
 function CustomInput({name, type, title, helper, typeInput = "input", required = false, disabled = false}) {
     return (
-        <div className="m-2">
+        <div className="mb-2 mt-2">
             <Form.Floating>
                 <Form.Control
-                    disabled={disabled}
+                    {...restProps}
                     required={required}
                     name={name}
                     id={`${name}_id`}
@@ -14,12 +15,13 @@ function CustomInput({name, type, title, helper, typeInput = "input", required =
                     placeholder={title}
                     as={typeInput}
                 />
-                <label htmlFor={`${name}_id`}>{title}</label>
                 <Form.Text className="text-muted">
                     {
                         helper
                     }
                 </Form.Text>
+                <label htmlFor={`${name}_id`}>{title}</label>
+
             </Form.Floating>
         </div>
     );

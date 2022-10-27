@@ -3,6 +3,7 @@ import CustomPagination from "../../../UI/CustomPagination/CustomPagination";
 import PublicatonsListItem from "./PublicationsListItem";
 
 function PublicationsList({publications, Row = false, children }) {
+    console.log(publications)
     return (
         <>
             {
@@ -12,7 +13,7 @@ function PublicationsList({publications, Row = false, children }) {
                         <div class="ps-3 pe-3">
                             {
                                 publications?.map((publication) => (
-                                        <PublicatonsListItem publiction={publication}/>
+                                        <PublicatonsListItem publication={publication}/>
                                     )
                                 )
                             }
@@ -25,7 +26,7 @@ function PublicationsList({publications, Row = false, children }) {
                 Row && publications?.map((publication) => (
                     <PublicatonsListItem
                         Row={Row}
-                        Publiction={publication}
+                        publication={publication}
                     />
                 ))
             }

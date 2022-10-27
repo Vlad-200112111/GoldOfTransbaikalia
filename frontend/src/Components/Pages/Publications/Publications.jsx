@@ -11,6 +11,8 @@ import Tinymce from "../../UI/Tinymce/Tinymce";
 
 function Publications() {
     const [show, setShow] = useState(false);
+  const [searchValueByTitle, setSearchValueByTitle] = useState("");
+  const [searchValueByCaption, setSearchValueByCaption] = useState("");
     const [file, setFile] = useState();
     const [publications, setPublications] = useState([]);
     const [pages, setPages] = useState([]);
@@ -19,20 +21,55 @@ function Publications() {
     const [html, setHtml] = useState('');
 
     useEffect(() => {
-        getPublications(page).then((Publications) => {
-            setPublications(Publications);
-            setPages(
-                Array.from(
-                    {length: Math.ceil(Publications.count / limit)},
-                    (_, i) => i + 1
-                )
-            );
-        });
+    getPublications(searchValueByTitle, searchValueByCaption, page).then(
+      (Publications) => {
+        setPublications(Publications);
+        setPages(
+          Array.from(
+            { length: Math.ceil(Publications.count / limit) },
+            (_, i) => i + 1
+          )
+        );
+      }
+    );
     }, [page]);
 
+  const search = () => {
+    getPublications(searchValueByTitle, searchValueByCaption).then((Publications) => {
+      console.log(Publications);
+      setPublications(Publications);
+      setPages(
+        Array.from(
+          { length: Math.ceil(Publications.count / limit) },
+          (_, i) => i + 1
+        )
+      );
+      setPage(1);
+    });
+  };
+
+  const resetSearch = (event) => {
+    if(event.keyCode === 8 || event.keyCode === 46){
+      getPublications().then((Publications)=>{
+        setPublications(Publications)
+        setPages(
+          Array.from(
+            { length: Math.ceil(Publications.count / limit) },
+            (_, i) => i + 1
+          )
+        );
+      })
+    }
+    
+  }
+  
     const handleShow = () => setShow(!show);
-    const getPublications = async (page) => {
-        const {data: Publications} = await api.News.getListNews(page);
+  const getPublications = async (title, caption, page=1) => {
+    const { data: Publications } = await api.News.getNews({
+      title: title,
+      caption: caption,
+      page: page,
+    });
         return Publications;
     };
     const next = () => {
@@ -80,10 +117,15 @@ function Publications() {
                 handleClose={handleShow}
                 body={
                     <>
-                        <CustomInput type={"text"} title={"Название"} name={"title"}/>
                         <CustomInput
                             type={"text"}
-                            title={"Краткое описание"}
+              title={"Название"}
+              maxLength={"80"}
+              name={"title"}
+            />
+            <CustomInput
+              maxLength={"3000"}
+              type={"text"}
                             name={"caption"}
                             typeInput={"textarea"}
                         />
@@ -99,30 +141,29 @@ function Publications() {
                 </Button>
                 <form class="d-flex flex-column">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">
-                            Поиск по месторождению
-                        </label>
-                        <input
-                            type="email"
-                            class="form-control"
-                            id="exampleFormControlInput1"
-                            placeholder="Дарасунский"
+            <CustomInput
+              onKeyDown={resetSearch} 
+              value={searchValueByTitle}
+              onChange={(ev) => setSearchValueByTitle(ev.target.value)}
+              type={"text"}
+              title={"Поиск по месторождению"}
+              name={"title"}
                         />
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlSelect1" class="form-label">
-                            Поиск по совпадению в тексте
-                        </label>
-                        <input
-                            type="email"
-                            class="form-control"
-                            id="exampleFormControlSelect1"
-                            placeholder="реки"
+            <CustomInput
+              onKeyDown={resetSearch} 
+              value={searchValueByCaption}
+              onChange={(ev) => setSearchValueByCaption(ev.target.value)}
+              type={"text"}
+              title={"Поиск по совпадению в тексте"}
+              name={"title"}
                         />
                     </div>
                     <div class="d-flex justify-content-end">
                         <button
                             type="button"
+              onClick={search}
                             class="btn btn-success d-flex justify-content-center m-2 w-25"
                         >
                             Поиск
@@ -130,7 +171,7 @@ function Publications() {
                     </div>
                 </form>
             </div>
-            <PublicationsList publications={publications.results}>
+      <PublicationsList publications={publications?.results}>
                 <CustomPagination
                     currentPage={page}
                     setPage={setPage}
