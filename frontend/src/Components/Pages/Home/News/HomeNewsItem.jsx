@@ -5,18 +5,17 @@ function HomeNewsItem({publicationsItem}) {
     return (
         <div className="d-lg-flex flex-lg-row pb-3 pt-3">
             <div className="bg-white w-100 d-lg-flex flex-lg-row shadow">
-                <img
-                    src={publicationsItem.image_url}
-                    alt="..."
-                    style={{maxWidth:'50%', maxHeight:'250px'}}
-                    className="image-fit-center-center img-fluid w-50"
-                />
-                <div className="p-3">
+                <div className='News-Img'style={{
+                        backgroundImage: `url("${publicationsItem.image_url}")`,
+                }} 
+                        ></div>
+                
+                <div className="p-3 w-50">
                     <a href="#" className="text-dark text-decoration-none">
-                        <h3 className="fw-bold h5">{publicationsItem.title}</h3>
+                        <h3 className="fw-bold h5 m-2 text-start">{publicationsItem.title}</h3>
                     </a>
                     <h4 className="fw-bold h6 small text-secondary">{publicationsItem.created}</h4>
-                    <p className="mb-0">
+                    <p className="mb-0 text-start m-2">
                         {publicationsItem.caption}
                     </p>
                     <button type="button" className="btn btn-success m-2">

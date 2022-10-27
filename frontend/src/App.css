@@ -48,6 +48,17 @@ body{
   color: #fff !important;
   background-color: #198754 !important;
 }
+.News-Img {
+  width:50%;
+  height:250px;
+  background-size:cover;
+  background-position:center
+}
+@media (max-width: 992px) {
+  .News-Img {
+    width: 100%;
+  }
+}
 
 @keyframes App-logo-spin {
   from {

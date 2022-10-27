@@ -87,7 +87,7 @@ function Publications() {
     const formData = new FormData(event.target);
     formData.append("image_url", file);
     const { data: result } = api.News.createNews(formData).then(() => {
-      getPublications(page).then((Publications) =>
+      getPublications(searchValueByTitle,searchValueByCaption,page).then((Publications) =>
         setPublications(Publications)
       );
       setPages(

@@ -7,21 +7,22 @@ function PublicatonsListItem({publication, Row}) {
             {!Row && (
                 <div class="d-lg-flex flex-lg-row pb-3 pt-3">
                     <div  class="bg-white w-100 d-lg-flex flex-lg-row shadow">
-                        <img
-                            src={publication?.image_url}
-                            alt="..."
-                            style={{maxWidth:'50%', maxHeight:'250px'}}
-                            class="image-fit-center-center img-fluid"
-                        />
-                        <div class="p-3">
+                        <div
+                            className="News-Img"
+                            style={{
+                                backgroundImage: `url("${publication?.image_url}")`
+                            }}
+                        ></div>
+                        
+                        <div class="p-3 w-50">
                             {" "}
-                            <a href="#" class="text-dark text-decoration-none">
-                                <h3 class="fw-bold h5">{publication?.title}</h3>
+                            <a href="#" class="text-dark text-decoration-none m-2">
+                                <h3 class="fw-bold h5 m-2">{publication?.title}</h3>
                             </a>
-                            <h4 class="fw-bold h6 small text-secondary">
-                                {publication?.creation_date}
+                            <h4 class="fw-bold h6 small text-secondary m-2">
+                                {publication?.creation_date?.slice(0,publication?.creation_date?.lastIndexOf("T"))}
                             </h4>
-                            <p class="mb-0">{publication?.caption?.slice(0,150)}{publication?.caption?.length > 150? '...' : ''}</p>
+                            <p class="m-2">{publication?.caption?.slice(0,150)}{publication?.caption?.length > 150? '...' : ''}</p>
                             <button type="button" class="btn btn-success m-2">
                                 <Link className="baseLink" to={`/publication-details/${publication.id}`}>
                                     Подробнее
