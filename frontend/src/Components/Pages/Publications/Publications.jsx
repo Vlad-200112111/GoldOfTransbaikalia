@@ -19,7 +19,22 @@ function Publications() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getPublications(page).then((Publications) => {
+    getPublications(searchValueByTitle, searchValueByCaption, page).then(
+      (Publications) => {
+        setPublications(Publications);
+        setPages(
+          Array.from(
+            { length: Math.ceil(Publications.count / limit) },
+            (_, i) => i + 1
+          )
+        );
+      }
+    );
+  }, [page]);
+
+  const search = () => {
+    getPublications(searchValueByTitle, searchValueByCaption).then((Publications) => {
+      console.log(Publications);
       setPublications(Publications);
       setPages(
         Array.from(
@@ -27,29 +42,32 @@ function Publications() {
           (_, i) => i + 1
         )
       );
-    });
-  }, [page]);
-
-  const search = async () => {
-    await api.News.getNewsByFilter(
-      searchValueByTitle,
-      searchValueByCaption
-      ).then((Publications) => {
-      console.log(Publications);
-      setPublications(Publications.data);
-      setPages(
-        Array.from(
-          { length: Math.ceil(Publications.data.count / limit) },
-          (_, i) => i + 1
-        )
-      );
       setPage(1);
     });
   };
 
+  const resetSearch = (event) => {
+    if(event.keyCode === 8 || event.keyCode === 46){
+      getPublications().then((Publications)=>{
+        setPublications(Publications)
+        setPages(
+          Array.from(
+            { length: Math.ceil(Publications.count / limit) },
+            (_, i) => i + 1
+          )
+        );
+      })
+    }
+    
+  }
+  
   const handleShow = () => setShow(!show);
-  const getPublications = async (page) => {
-    const { data: Publications } = await api.News.getListNews(page);
+  const getPublications = async (title, caption, page=1) => {
+    const { data: Publications } = await api.News.getNews({
+      title: title,
+      caption: caption,
+      page: page,
+    });
     return Publications;
   };
   const next = () => {
@@ -95,9 +113,14 @@ function Publications() {
         handleClose={handleShow}
         body={
           <>
-            <CustomInput type={"text"} title={"Название"} maxLength={'80'} name={"title"} />
             <CustomInput
-              maxLength={'3000'}
+              type={"text"}
+              title={"Название"}
+              maxLength={"80"}
+              name={"title"}
+            />
+            <CustomInput
+              maxLength={"3000"}
               type={"text"}
               title={"Описание"}
               name={"caption"}
@@ -115,6 +138,7 @@ function Publications() {
         <form class="d-flex flex-column">
           <div class="mb-3">
             <CustomInput
+              onKeyDown={resetSearch} 
               value={searchValueByTitle}
               onChange={(ev) => setSearchValueByTitle(ev.target.value)}
               type={"text"}
@@ -124,6 +148,7 @@ function Publications() {
           </div>
           <div class="mb-3">
             <CustomInput
+              onKeyDown={resetSearch} 
               value={searchValueByCaption}
               onChange={(ev) => setSearchValueByCaption(ev.target.value)}
               type={"text"}
@@ -142,7 +167,7 @@ function Publications() {
           </div>
         </form>
       </div>
-      <PublicationsList publications={publications.results}>
+      <PublicationsList publications={publications?.results}>
         <CustomPagination
           currentPage={page}
           setPage={setPage}

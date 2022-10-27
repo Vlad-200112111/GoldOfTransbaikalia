@@ -7,16 +7,14 @@ const endpoints = {
         "Content-Type": "multipart/form-data",
       },
     }),
-  getListNews: (page) => axios.get(`news/?page=${page}`),
   getListNewsByLimit: (limit) => axios.get(`news/limit/?limit=${limit}`),
-  getNewsByFilter: (
-    title = "",
-    caption = "",
-    creation_date = "",
-    publication = ""
-  ) =>
+  getNews: (options) =>
     axios.get(
-      `news/filter/?title=${title}&caption=${caption}&creation_date=${creation_date}&publication=${publication}`
+      `news/filter/?title=${options.title || ""}&caption=${
+        options?.caption || ""
+      }&creation_date=${options?.creation_date || ""}&publication=${
+        options?.publication || ""
+      }&page=${options?.page || 1}`
     ),
   getNewsById: (id) => axios.get(`news/${id}`),
 };
