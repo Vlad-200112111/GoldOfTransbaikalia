@@ -1,6 +1,7 @@
-from django.urls import path,re_path
+from django.urls import path, re_path
 
-from .views import CommentsCreateAPIView,CommentsListLimitAPIView,NewsListSearchAPIView, CommentsDetailAPIView, NewsListLimitAPIView, CommentsListAPIView, NewsCreateAPIView, NewsListAPIView, NewsDetailAPIView
+from .views import CommentsCreateAPIView, CommentsListLimitAPIView, NewsListSearchAPIView,\
+     CommentsDetailAPIView, NewsListLimitAPIView, CommentsListAPIView, NewsCreateAPIView, NewsDetailAPIView
 
 app_name = "app"
 
@@ -12,5 +13,5 @@ urlpatterns = [
     path("news/comments/", CommentsListLimitAPIView.as_view()),
     path("news/comments/create/", CommentsCreateAPIView.as_view()),
     path('news/', NewsListSearchAPIView.as_view()),
-    
+
 ]
