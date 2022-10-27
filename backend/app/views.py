@@ -12,10 +12,10 @@ class NewsCreateAPIView(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
     
 
-class NewsListAPIView(generics.ListAPIView):
-    queryset = News.objects.all()
-    serializer_class = NewsSerializer
-    permission_classes = (permissions.AllowAny,)
+# class NewsListAPIView(generics.ListAPIView):
+#     queryset = News.objects.all()
+#     serializer_class = NewsSerializer
+#     permission_classes = (permissions.AllowAny,)
 
 class NewsListLimitAPIView(generics.ListAPIView):
     serializer_class = NewsSerializer

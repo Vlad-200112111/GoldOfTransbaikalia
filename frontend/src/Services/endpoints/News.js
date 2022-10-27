@@ -10,7 +10,7 @@ const endpoints = {
   getListNewsByLimit: (limit) => axios.get(`news/limit/?limit=${limit}`),
   getNews: (options) =>
     axios.get(
-      `news/filter/?title=${options.title || ""}&caption=${
+      `news/?title=${options.title || ""}&caption=${
         options?.caption || ""
       }&creation_date=${options?.creation_date || ""}&publication=${
         options?.publication || ""
