@@ -9,7 +9,7 @@ function HomeComments({Comments}) {
         </h5>
         <div className="container">
             {
-                Comments.map(comment=>
+                Comments?.map(comment=>
                         <HomeCommentsItem Comment={comment} />
                     )
             }

@@ -9,59 +9,32 @@ import logo3 from '../../../Assets/Images/logo-3.svg'
 import logo2 from '../../../Assets/Images/logo-2.svg'
 import logo4 from '../../../Assets/Images/logo-4.svg'
 import logo1 from '../../../Assets/Images/logo-1.svg'
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import api from "../../../Services/api";
 
 function Home() {
     const [publications, setPublications] = useState([])
+    const [pages, setPages] = useState([])
+    const [limit, setLimit] = useState(2)
+    const [Comments, setComments] = useState([])
+    const [page, setPage] = useState(1)
 
-    const getPublications = async () => {
-        return await api.News.getListNews()
+    const getNews = async (limit) =>{
+        const {data: Publications} = await api.News.getListNewsByLimit(limit)
+        return Publications
+    }
+    const getComments = async (limit) =>{
+        const {data: Comments} = await api.Comments.getListCommentsByLimit(limit)
+        return Comments
     }
 
-    useEffect( ()=>{
-        getPublications().then((res) => setPublications(res.data))
+    useEffect(()=>{
+        getNews(5).then((Publications)=>setPublications(Publications))
+        getComments(7).then((comments)=>setComments(comments))
     },[])
 
 
-    const Comments = [
-        {
-            id: 0,
-            user: {userId: 1, name: "UserName", lastName: "UserLastName", potronymic: "UserPotronymic"},
-            comment: "comment",
-            link: "/link"
-        },
-        {
-            id: 1,
-            user: {userId: 12, name: "UserName12", lastName: "UserLastName", potronymic: "UserPotronymic"},
-            comment: "comment",
-            link: "/link"
-        },
-        {
-            id: 2,
-            user: {userId: 13, name: "UserName13", lastName: "UserLastName", potronymic: "UserPotronymic"},
-            comment: "comment",
-            link: "/link"
-        },
-        {
-            id: 3,
-            user: {userId: 11, name: "UserName11", lastName: "UserLastName", potronymic: "UserPotronymic"},
-            comment: "comment",
-            link: "/link"
-        },
-        {
-            id: 4,
-            user: {userId: 12, name: "UserName12", lastName: "UserLastName", potronymic: "UserPotronymic"},
-            comment: "comment",
-            link: "/link"
-        },
-        {
-            id: 5,
-            user: {userId: 1, name: "UserName", lastName: "UserLastName", potronymic: "UserPotronymic"},
-            comment: "comment",
-            link: "/link"
-        }
-    ]
+    
 
     return (
         <>
@@ -122,7 +95,7 @@ function Home() {
                     <section className="text-center">
                         <div className="container pb-4 pt-3">
                             <div className="align-items-center justify-content-center g-0 row">
-                                <HomeComments Comments={Comments}/>
+                                <HomeComments Comments={Comments.results}/>
                             </div>
                         </div>
                     </section>
@@ -131,7 +104,7 @@ function Home() {
                     <section className="text-center">
                         <div className="container pt-3">
                             <div className="align-items-center justify-content-center g-0 row">
-                                <HomeNews publications={publications}/>
+                                <HomeNews publications={publications.results}/>
                             </div>
                         </div>
                     </section>
