@@ -14,9 +14,9 @@ function PublicatonsListItem({publication, Row}) {
                             }}
                         ></div>
                         
-                        <div class="p-3 w-50">
+                        <div class="p-3 w-50" style={{display:'flex', flexDirection:'column', alignItems:'start'}}>
                             {" "}
-                            <a href="#" class="text-dark text-decoration-none m-2">
+                            <a href="#" class="text-dark text-decoration-none">
                                 <h3 class="fw-bold h5 m-2">{publication?.title}</h3>
                             </a>
                             <h4 class="fw-bold h6 small text-secondary m-2">

@@ -10,7 +10,7 @@ function HomeNewsItem({publicationsItem}) {
                 }} 
                         ></div>
                 
-                <div className="p-3 w-50">
+                <div className="p-3 w-50" style={{display:'flex', flexDirection:'column', alignItems:'start'}}>
                     <a href="#" className="text-dark text-decoration-none">
                         <h3 className="fw-bold h5 m-2 text-start">{publicationsItem.title}</h3>
                     </a>
