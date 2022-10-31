@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import api from "../../../Services/api";
-function CreateComment({ Publication }) {
+function CreateComment({ Publication, setSaved }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
@@ -15,6 +15,7 @@ function CreateComment({ Publication }) {
       setName("");
       setComment("");
       setEmail("");
+      setSaved(true)
     });
   };
   return (

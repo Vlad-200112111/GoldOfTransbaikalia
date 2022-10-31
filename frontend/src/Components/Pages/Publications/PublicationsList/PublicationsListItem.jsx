@@ -6,7 +6,7 @@ function PublicatonsListItem({publication, Row}) {
         <>
             {!Row && (
                 <div class="d-lg-flex flex-lg-row pb-3 pt-3">
-                    <div  class="bg-white w-100 d-lg-flex flex-lg-row shadow">
+                    <div class="bg-white w-100 d-lg-flex flex-lg-row shadow">
                         <div
                             className="News-Img"
                             style={{
@@ -35,7 +35,7 @@ function PublicatonsListItem({publication, Row}) {
             {
                 Row && (
                     <div class="col-lg-4 col-md-6 pb-3 pt-3">
-                        <div class="bg-white shadow">
+                        <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}   class="bg-white shadow h-100">
                             <Link className="baseLink" to={`/publication-details/${publication?.id}`}>
                                 <img
                                     src={publication?.image_url}
