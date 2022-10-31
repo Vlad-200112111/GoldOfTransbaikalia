@@ -83,3 +83,56 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class SubsoilUser(models.Model):
+    name = models.CharField(max_length=100)
+    tin = models.CharField(max_length=12, null=True)
+    iec = models.CharField(max_length=9, null=True)
+    psrn = models.CharField(max_length=15, null=True)
+    date_of_registration = models.DateField()
+    director = models.CharField(max_length=100)
+
+
+
+class License(models.Model):
+    subsoil_user = models.ForeignKey(SubsoilUser, related_name='licenses', on_delete=models.CASCADE)
+    name = models.CharField(max_length=250)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    cancelled = models.BooleanField()
+    destination = models.CharField(max_length=250)
+    diversion = models.CharField(max_length=250)
+
+class Area(models.Model):
+    name = models.CharField(max_length=100)
+    official_portal = models.CharField(max_length=200)
+    number_svg = models.IntegerField()
+
+class LocalityType(models.Model):
+    name = models.CharField(max_length=100)
+
+class Locality(models.Model):
+    name = models.CharField(max_length=100)
+    area = models.ForeignKey(Area, related_name='localities', on_delete=models.CASCADE)
+    locality_type = models.ForeignKey(LocalityType, related_name='localities', on_delete=models.CASCADE)
+
+class Deposit(models.Model):
+    name = models.CharField(max_length=200)
+    license = models.ForeignKey(License, related_name='deposits', on_delete=models.CASCADE)
+    area = models.ForeignKey(Area, related_name='deposits', on_delete=models.CASCADE)
+    development = models.CharField(max_length=30, null=True)
+    amount_inventory = models.FloatField(null=True)
+    c2 = models.FloatField(null=True)
+    off_balance = models.FloatField(null=True)
+
+class LocalityDeposit(models.Model):
+    locality = models.ForeignKey(Locality, related_name='locality_deposits', on_delete=models.CASCADE)
+    deposit = models.ForeignKey(Deposit, related_name='locality_deposits', on_delete=models.CASCADE)
+    direction = models.CharField(max_length=20, null=True)
+    distance = models.FloatField(null=True)
+
+class DaverageSalary(models.Model):
+    area = models.ForeignKey(Area, related_name='daverage_salaries', on_delete=models.CASCADE)
+    year = models.CharField(max_length=20, null=True)
+    value = models.CharField(max_length=10, null=True)
