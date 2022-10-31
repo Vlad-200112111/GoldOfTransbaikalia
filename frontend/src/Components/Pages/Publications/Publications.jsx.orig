@@ -10,8 +10,9 @@ import CustomPagination from "../../UI/CustomPagination/CustomPagination";
 import Tinymce from "../../UI/Tinymce/Tinymce";
 
 function Publications() {
-<<<<<<< HEAD
     const [show, setShow] = useState(false);
+  const [searchValueByTitle, setSearchValueByTitle] = useState("");
+  const [searchValueByCaption, setSearchValueByCaption] = useState("");
     const [file, setFile] = useState();
     const [publications, setPublications] = useState([]);
     const [pages, setPages] = useState([]);
@@ -20,20 +21,56 @@ function Publications() {
     const [html, setHtml] = useState('');
 
     useEffect(() => {
-        getPublications(page).then((Publications) => {
-            setPublications(Publications);
-            setPages(
-                Array.from(
-                    {length: Math.ceil(Publications.count / limit)},
-                    (_, i) => i + 1
-                )
-            );
-        });
+    getPublications(searchValueByTitle, searchValueByCaption, page).then(
+      (Publications) => {
+        setPublications(Publications);
+        setPages(
+          Array.from(
+            { length: Math.ceil(Publications.count / limit) },
+            (_, i) => i + 1
+          )
+        );
+      }
+    );
     }, [page]);
 
+  const search = () => {
+    getPublications(searchValueByTitle, searchValueByCaption).then((Publications) => {
+      console.log(Publications);
+      setPublications(Publications);
+      setPages(
+        Array.from(
+          { length: Math.ceil(Publications.count / limit) },
+          (_, i) => i + 1
+        )
+      );
+      setPage(1);
+    });
+  };
+
+  const resetSearch = (event) => {
+    if(event.keyCode === 8 || event.keyCode === 46){
+      getPublications().then((Publications)=>{
+        setPublications(Publications)
+        setPages(
+          Array.from(
+            { length: Math.ceil(Publications.count / limit) },
+            (_, i) => i + 1
+          )
+        );
+        setPage(1)
+      })
+    }
+    
+  }
+  
     const handleShow = () => setShow(!show);
-    const getPublications = async (page) => {
-        const {data: Publications} = await api.News.getListNews(page);
+  const getPublications = async (title, caption, page=1) => {
+    const { data: Publications } = await api.News.getNews({
+      title: title,
+      caption: caption,
+      page: page,
+    });
         return Publications;
     };
     const next = () => {
@@ -71,6 +108,7 @@ function Publications() {
         setFile(event.target.files[0]);
     }
 
+<<<<<<< HEAD
     return (
         <>
             <ModalWindow
@@ -81,147 +119,16 @@ function Publications() {
                 handleClose={handleShow}
                 body={
                     <>
-                        <CustomInput type={"text"} title={"Название"} name={"title"}/>
                         <CustomInput
                             type={"text"}
-                            title={"Краткое описание"}
-                            name={"caption"}
-                            typeInput={"textarea"}
-                        />
-                        <CustomInputFile name={"image"} onChange={onChangeFile}/>
-                        <Tinymce setHtml={setHtml} showButtonForForm={true} titleButton="Отправить на проверку"/>
-                    </>
-                }
-                functionForModalWindow={createPublication}
-            />
-            <div class="container mt-4">
-                <Button className="btn btn-success" onClick={handleShow}>
-                    Опубликовать новость
-                </Button>
-                <form class="d-flex flex-column">
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">
-                            Поиск по месторождению
-                        </label>
-                        <input
-                            type="email"
-                            class="form-control"
-                            id="exampleFormControlInput1"
-                            placeholder="Дарасунский"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlSelect1" class="form-label">
-                            Поиск по совпадению в тексте
-                        </label>
-                        <input
-                            type="email"
-                            class="form-control"
-                            id="exampleFormControlSelect1"
-                            placeholder="реки"
-                        />
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button
-                            type="button"
-                            class="btn btn-success d-flex justify-content-center m-2 w-25"
-                        >
-                            Поиск
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <PublicationsList publications={publications.results}>
-                <CustomPagination
-                    currentPage={page}
-                    setPage={setPage}
-                    NextFunction={next}
-                    PrevFunction={prev}
-                    Pages={pages}
-                />
-            </PublicationsList>
-        </>
-    );
 =======
-  const [show, setShow] = useState(false);
-  const [searchValueByTitle, setSearchValueByTitle] = useState("");
-  const [searchValueByCaption, setSearchValueByCaption] = useState("");
-  const [file, setFile] = useState();
-  const [publications, setPublications] = useState([]);
-  const [pages, setPages] = useState([]);
-  const [limit, setLimit] = useState(20);
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    getPublications(searchValueByTitle, searchValueByCaption, page).then(
-      (Publications) => {
-        setPublications(Publications);
-        setPages(
-          Array.from(
-            { length: Math.ceil(Publications.count / limit) },
-            (_, i) => i + 1
-          )
-        );
-      }
-    );
-  }, [page]);
-
-  const search = () => {
-    getPublications(searchValueByTitle, searchValueByCaption).then((Publications) => {
-      console.log(Publications);
-      setPublications(Publications);
-      setPages(
-        Array.from(
-          { length: Math.ceil(Publications.count / limit) },
-          (_, i) => i + 1
-        )
-      );
-      setPage(1);
-    });
-  };
-
-  const resetSearch = (event) => {
-    if(event.keyCode === 8 || event.keyCode === 46){
-      getPublications().then((Publications)=>{
-        setPublications(Publications)
-        setPages(
-          Array.from(
-            { length: Math.ceil(Publications.count / limit) },
-            (_, i) => i + 1
-          )
-        );
-      })
-    }
-    
-  }
-  
-  const handleShow = () => setShow(!show);
-  const getPublications = async (title, caption, page=1) => {
-    const { data: Publications } = await api.News.getNews({
-      title: title,
-      caption: caption,
-      page: page,
-    });
-    return Publications;
-  };
-  const next = () => {
-    if (publications.next) {
-      setPage(page + 1);
-    }
-  };
-  const prev = () => {
-    if (publications.previous) {
-      setPage(page - 1);
-    }
-  };
-
   async function createPublication(event) {
     console.log(page);
     event.preventDefault();
     const formData = new FormData(event.target);
     formData.append("image_url", file);
     const { data: result } = api.News.createNews(formData).then(() => {
-      getPublications(page).then((Publications) =>
+      getPublications(searchValueByTitle,searchValueByCaption,page).then((Publications) =>
         setPublications(Publications)
       );
       setPages(
@@ -249,6 +156,7 @@ function Publications() {
           <>
             <CustomInput
               type={"text"}
+>>>>>>> GoldOfTransbaikalia/front
               title={"Название"}
               maxLength={"80"}
               name={"title"}
@@ -256,21 +164,21 @@ function Publications() {
             <CustomInput
               maxLength={"3000"}
               type={"text"}
-              title={"Описание"}
-              name={"caption"}
-              typeInput={"textarea"}
+                            name={"caption"}
+                            typeInput={"textarea"}
+                        />
+                        <CustomInputFile name={"image"} onChange={onChangeFile}/>
+                        <Tinymce setHtml={setHtml} showButtonForForm={true} titleButton="Отправить на проверку"/>
+                    </>
+                }
+                functionForModalWindow={createPublication}
             />
-            <CustomInputFile name={"image"} onChange={onChangeFile} />
-          </>
-        }
-        functionForModalWindow={createPublication}
-      />
-      <div class="container mt-4">
-        <Button className="btn btn-success" onClick={handleShow}>
-          Опубликовать новость
-        </Button>
-        <form class="d-flex flex-column">
-          <div class="mb-3">
+            <div class="container mt-4">
+                <Button className="btn btn-success" onClick={handleShow}>
+                    Опубликовать новость
+                </Button>
+                <form class="d-flex flex-column">
+                    <div class="mb-3">
             <CustomInput
               onKeyDown={resetSearch} 
               value={searchValueByTitle}
@@ -278,9 +186,9 @@ function Publications() {
               type={"text"}
               title={"Поиск по месторождению"}
               name={"title"}
-            />
-          </div>
-          <div class="mb-3">
+                        />
+                    </div>
+                    <div class="mb-3">
             <CustomInput
               onKeyDown={resetSearch} 
               value={searchValueByCaption}
@@ -288,31 +196,30 @@ function Publications() {
               type={"text"}
               title={"Поиск по совпадению в тексте"}
               name={"title"}
-            />
-          </div>
-          <div class="d-flex justify-content-end">
-            <button
-              type="button"
+                        />
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button
+                            type="button"
               onClick={search}
-              class="btn btn-success d-flex justify-content-center m-2 w-25"
-            >
-              Поиск
-            </button>
-          </div>
-        </form>
-      </div>
+                            class="btn btn-success d-flex justify-content-center m-2 w-25"
+                        >
+                            Поиск
+                        </button>
+                    </div>
+                </form>
+            </div>
       <PublicationsList publications={publications?.results}>
-        <CustomPagination
-          currentPage={page}
-          setPage={setPage}
-          NextFunction={next}
-          PrevFunction={prev}
-          Pages={pages}
-        />
-      </PublicationsList>
-    </>
-  );
->>>>>>> GoldOfTransbaikalia/front
+                <CustomPagination
+                    currentPage={page}
+                    setPage={setPage}
+                    NextFunction={next}
+                    PrevFunction={prev}
+                    Pages={pages}
+                />
+            </PublicationsList>
+        </>
+    );
 }
 
 export default Publications;
