@@ -15,11 +15,11 @@ function LicensesDetails() {
       userId
     );
     return SubsoilUser;
-  };
+  };   
   useEffect(() => {
-    getLicenseById(params.id).then((license) => {
+    getLicenseById(params?.id).then((license) => {
       setLicense(license);
-      getSubsoilUserByUserId(license.subsoil_user_id).then((SubsoilUser) => {
+      getSubsoilUserByUserId(license.subsoil_user).then((SubsoilUser) => {
         setSubsoilUser(SubsoilUser);
       });
     });
