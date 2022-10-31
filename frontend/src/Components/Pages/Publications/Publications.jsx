@@ -58,6 +58,7 @@ function Publications() {
             (_, i) => i + 1
           )
         );
+        setPage(1)
       })
     }
     
@@ -90,7 +91,7 @@ function Publications() {
         formData.append("html", String(html));
         console.log(formData.get('html'))
         const {data: result} = api.News.createNews(formData).then(() => {
-            getPublications(page).then((Publications) =>
+      getPublications(searchValueByTitle,searchValueByCaption,page).then((Publications) =>
                 setPublications(Publications)
             );
             setPages(
