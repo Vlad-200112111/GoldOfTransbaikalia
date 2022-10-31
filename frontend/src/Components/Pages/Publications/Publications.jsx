@@ -56,6 +56,7 @@ function Publications() {
             (_, i) => i + 1
           )
         );
+        setPage(1)
       })
     }
     

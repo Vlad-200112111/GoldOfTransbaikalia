@@ -76,6 +76,8 @@ class News(models.Model):
 class Comments(models.Model):
     content = models.CharField(max_length=450)
     creation_date = models.DateField(auto_now=True)
+    first_name = models.CharField(max_length=200, null=True)
+    email = models.EmailField(null=True)
     new = models.ForeignKey(to=News, on_delete=models.CASCADE)
 
     # class Meta:

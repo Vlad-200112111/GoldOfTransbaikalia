@@ -9,6 +9,8 @@ function CreateComment({ Publication }) {
     await api.Comments.createComment({
       new: Publication.id,
       content: comment,
+      first_name:name,
+      email:email
     }).then(() => {
       setName("");
       setComment("");
