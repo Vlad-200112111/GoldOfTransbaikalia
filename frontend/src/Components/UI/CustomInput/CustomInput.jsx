@@ -2,7 +2,16 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 
 
-function CustomInput({name, type, title, helper, typeInput = "input", required = false, disabled = false , ...restProps}) {
+function CustomInput({
+                         name,
+                         type,
+                         title,
+                         helper,
+                         typeInput = "input",
+                         required = false,
+                         disabled = false ,
+                         ...restProps
+}) {
     return (
         <div className="mb-2 mt-2">
             <Form.Floating>
