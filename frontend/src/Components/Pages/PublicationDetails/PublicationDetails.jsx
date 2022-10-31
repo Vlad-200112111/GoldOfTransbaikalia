@@ -12,6 +12,7 @@ import CustomPagination from "../../UI/CustomPagination/CustomPagination";
 function PublicationDetails() {
     const params = useParams();
     const [comments, setComments] = useState([]);
+    const [savedComment, setSavedComment] = useState(false);
     const [Publication, setPublication] = useState([]);
     const [Publications, setPublications] = useState([]);
     const [pages, setPages] = useState([]);
@@ -30,6 +31,13 @@ function PublicationDetails() {
         return Publications
     }
     useEffect(() => {
+        getNewsById(params.id).then((news) => {
+            setPublication(news);
+        });
+        getNewsByLimit(3).then(Publications => setPublications(Publications))
+    }, [params.id]);
+
+    useEffect(()=>{
         getComments(params.id, page).then((comments) => {
             setComments(comments);
             setPages(
@@ -39,11 +47,8 @@ function PublicationDetails() {
                 )
             );
         });
-        getNewsById(params.id).then((news) => {
-            setPublication(news);
-        });
-        getNewsByLimit(3).then(Publications => setPublications(Publications))
-    }, [params.id, page]);
+    },[page, savedComment])
+
 
     const next = () => {
         if (comments.next) {
@@ -110,7 +115,7 @@ function PublicationDetails() {
                                                     />
                                                 )}
                                             </PublicationComments>
-                                            <CreateComment Publication={Publication}/>
+                                            <CreateComment Publication={Publication} setSaved={setSavedComment}/>
                                         </div>
                                     </section>
                                 </div>

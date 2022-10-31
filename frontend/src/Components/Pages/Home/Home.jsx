@@ -1,6 +1,7 @@
 import HomeBanner from '../../../Assets/Images/HomeBanner.jpg'
 import HomeComments from './Comments/HomeComments';
 import HomeNews from './News/HomeNews';
+import PublicationsList from '../Publications/PublicationsList/PublicationsList';
 import logo8 from '../../../Assets/Images/logo-8.svg'
 import logo7 from '../../../Assets/Images/logo-7.svg'
 import logo6 from '../../../Assets/Images/logo-6.svg'
@@ -104,7 +105,7 @@ function Home() {
                     <section className="text-center">
                         <div className="container pt-3">
                             <div className="align-items-center justify-content-center g-0 row">
-                                <HomeNews publications={publications.results}/>
+                                <PublicationsList publications={publications?.results}/>
                             </div>
                         </div>
                     </section>

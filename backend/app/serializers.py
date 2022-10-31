@@ -29,6 +29,8 @@ class NewsSerializer(serializers.ModelSerializer):
 class CommentsSerializer(serializers.ModelSerializer):
     content = serializers.CharField(required=True)
     new = serializers.SlugRelatedField(slug_field='id', queryset=News.objects)
+    first_name = serializers.CharField(required=True)
+    email = serializers.EmailField(required=True)
 
     class Meta:
         model = Comments

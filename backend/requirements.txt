@@ -4,3 +4,4 @@ djoser
 Pillow
 django-cors-headers
 drf-yasg
+mysqlclient
