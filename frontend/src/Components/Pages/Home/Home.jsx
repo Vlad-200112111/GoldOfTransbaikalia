@@ -23,6 +23,7 @@ function Home() {
         const {data: Publications} = await api.News.getListNewsByLimit(limit)
         return Publications
     }
+
     const getComments = async (limit) =>{
         const {data: Comments} = await api.Comments.getListCommentsByLimit(limit)
         return Comments

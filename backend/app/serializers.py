@@ -2,9 +2,10 @@ from djoser.serializers import UserCreateSerializer
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import News, Comments
+from .models import News, Comments, License
 
 User = get_user_model()
+
 
 # class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -32,4 +33,10 @@ class CommentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comments
-        fields = ['id','new', 'content','first_name', 'email']
+        fields = ['id', 'new', 'content', 'first_name', 'email']
+
+
+class LicensesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = License
+        fields = ['id', 'name', 'start_date', 'end_date', 'cancelled', 'destination', 'diversion', 'subsoil_user_id']

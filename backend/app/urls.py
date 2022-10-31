@@ -1,7 +1,8 @@
 from django.urls import path, re_path
 
-from .views import CommentsCreateAPIView, CommentsListLimitAPIView, NewsListSearchAPIView,\
-     CommentsDetailAPIView, NewsListLimitAPIView, CommentsListAPIView, NewsCreateAPIView, NewsDetailAPIView
+from .views import CommentsCreateAPIView, CommentsListLimitAPIView, NewsListSearchAPIView, \
+    CommentsDetailAPIView, NewsListLimitAPIView, CommentsListAPIView, NewsCreateAPIView, NewsDetailAPIView, \
+    LicensesListAPIView
 
 app_name = "app"
 
@@ -13,5 +14,6 @@ urlpatterns = [
     path("news/comments/", CommentsListLimitAPIView.as_view()),
     path("news/comments/create/", CommentsCreateAPIView.as_view()),
     path('news/', NewsListSearchAPIView.as_view()),
+    path('licenses/', LicensesListAPIView.as_view()),
 
 ]

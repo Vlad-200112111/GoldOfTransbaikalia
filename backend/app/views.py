@@ -1,5 +1,5 @@
-from .models import Comments, News
-from .serializers import CommentsSerializer, NewsSerializer
+from .models import Comments, News, License
+from .serializers import CommentsSerializer, NewsSerializer, LicensesSerializer
 from rest_framework import permissions, viewsets, generics
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -34,6 +34,7 @@ class NewsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class NewsListSearchAPIView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = NewsSerializer
+
     def get_queryset(self):
         queryset = News.objects.all()
         title = self.request.query_params.get('title') if self.request.query_params.get('title') is not None else ''
@@ -76,5 +77,15 @@ class CommentsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = CommentsSerializer
     queryset = Comments.objects.all()
-    
+
+
+class LicensesListAPIView(generics.ListAPIView):
+    serializer_class = LicensesSerializer
+    permission_classes = (permissions.AllowAny,)
+    queryset = License.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        licenses = License.objects.all()
+        results = self.paginate_queryset(licenses)
+        return self.get_paginated_response(LicensesSerializer(results, many=True).data)
     
