@@ -1,5 +1,5 @@
-from .models import Comments, News, License
-from .serializers import CommentsSerializer, NewsSerializer, LicensesSerializer
+from .models import Comments, News, License, SubsoilUser
+from .serializers import CommentsSerializer, NewsSerializer, LicensesSerializer, SubsoilUserSerializer
 from rest_framework import permissions, viewsets, generics
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -89,3 +89,13 @@ class LicensesListAPIView(generics.ListAPIView):
         results = self.paginate_queryset(licenses)
         return self.get_paginated_response(LicensesSerializer(results, many=True).data)
     
+class LicensesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = LicensesSerializer
+    queryset = License.objects.all()
+    
+
+class SubsoilUserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = SubsoilUserSerializer
+    queryset = SubsoilUser.objects.all()

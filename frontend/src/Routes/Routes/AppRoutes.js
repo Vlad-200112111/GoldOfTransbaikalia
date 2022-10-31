@@ -9,6 +9,7 @@ import Statistics from "../../Components/Pages/Statistics/Statistics";
 import GuestRoute from "../Components/GuestRoute/GuestRoute";
 import Registration from "../../Components/Pages/Registration/Registration";
 import UserActivation from "../../Components/Pages/UserActivation/UserActivation";
+import LicensesDetails from "../../Components/Pages/LicensesDetails/LicensesDetails";
 
 
 function AppRoutes() {
@@ -59,6 +60,14 @@ function AppRoutes() {
                 element={
                     <GuestRoute>
                         <Licenses/>
+                    </GuestRoute>
+                }
+            />
+            <Route
+                path="/licenses-details/:id"
+                element={
+                    <GuestRoute>
+                        <LicensesDetails/>
                     </GuestRoute>
                 }
             />

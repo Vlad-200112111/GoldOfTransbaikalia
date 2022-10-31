@@ -2,7 +2,7 @@ from django.urls import path, re_path
 
 from .views import CommentsCreateAPIView, CommentsListLimitAPIView, NewsListSearchAPIView, \
     CommentsDetailAPIView, NewsListLimitAPIView, CommentsListAPIView, NewsCreateAPIView, NewsDetailAPIView, \
-    LicensesListAPIView
+    LicensesListAPIView, LicensesDetailAPIView, SubsoilUserDetailAPIView
 
 app_name = "app"
 
@@ -15,5 +15,7 @@ urlpatterns = [
     path("news/comments/create/", CommentsCreateAPIView.as_view()),
     path('news/', NewsListSearchAPIView.as_view()),
     path('licenses/', LicensesListAPIView.as_view()),
+    path('licenses/<int:pk>', LicensesDetailAPIView.as_view()),
+    path('subsoil-user/<int:pk>', SubsoilUserDetailAPIView.as_view()),
 
 ]

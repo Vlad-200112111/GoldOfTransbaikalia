@@ -2,7 +2,7 @@ from djoser.serializers import UserCreateSerializer
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import News, Comments, License
+from .models import News, Comments, License, SubsoilUser
 
 User = get_user_model()
 
@@ -41,4 +41,9 @@ class CommentsSerializer(serializers.ModelSerializer):
 class LicensesSerializer(serializers.ModelSerializer):
     class Meta:
         model = License
-        fields = ['id', 'name', 'start_date', 'end_date', 'cancelled', 'destination', 'diversion', 'subsoil_user_id']
+        fields = '__all__'
+
+class SubsoilUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubsoilUser
+        fields = "__all__"

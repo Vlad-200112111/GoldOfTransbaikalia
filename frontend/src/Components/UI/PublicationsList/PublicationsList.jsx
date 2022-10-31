@@ -1,5 +1,4 @@
 import { Children } from "react";
-import CustomPagination from "../../../UI/CustomPagination/CustomPagination";
 import PublicatonsListItem from "./PublicationsListItem";
 
 function PublicationsList({publications, Row = false, children }) {

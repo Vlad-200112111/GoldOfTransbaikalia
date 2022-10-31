@@ -1,7 +1,8 @@
-import PublicationsList from "./PublicationsList/PublicationsList";
+import PublicationsList from "../../UI/PublicationsList/PublicationsList";
 import ModalWindow from "../../UI/ModalWindow/ModalWindow";
 import Button from "react-bootstrap/Button";
 import {useEffect, useState} from "react";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import Form from "react-bootstrap/Form";
 import CustomInput from "../../UI/CustomInput/CustomInput";
 import CustomInputFile from "../../UI/CustomInputFile/CustomInputFile";
@@ -88,20 +89,28 @@ function Publications() {
         event.preventDefault();
         const formData = new FormData(event.target);
         formData.append("image_url", file);
+        
         formData.append("html", String(html));
-        console.log(formData.get('html'))
-        const {data: result} = api.News.createNews(formData).then(() => {
-      getPublications(searchValueByTitle,searchValueByCaption,page).then((Publications) =>
-                setPublications(Publications)
-            );
-            setPages(
-                Array.from(
-                    {length: Math.ceil(publications.count / limit)},
-                    (_, i) => i + 1
-                )
-            );
-        });
-        setShow(false);
+        if(formData.get('html')&&formData.get("image_url")&&formData.get("title")&&formData.get("caption")){
+          const {data: result} = api.News.createNews(formData).then(() => {
+            getPublications(searchValueByTitle,searchValueByCaption,page).then((Publications) =>
+                      setPublications(Publications)
+                  );
+                  setPages(
+                      Array.from(
+                          {length: Math.ceil(publications.count / limit)},
+                          (_, i) => i + 1
+                      )
+                  );
+                  NotificationManager.success('Новость отправлена на проверку');
+                  setShow(false);
+              });
+        }else{
+          NotificationManager.warning('Не все поля заполнены')
+
+        }
+        
+        
     }
 
     function onChangeFile(event) {
@@ -181,6 +190,8 @@ function Publications() {
                     Pages={pages}
                 />
             </PublicationsList>
+            <NotificationContainer/>
+
         </>
     );
 }
