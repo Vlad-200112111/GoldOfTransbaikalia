@@ -37,9 +37,14 @@
 bg-site {
   background-color: #ff0000;
 }
+html{
+  height: 100%;
+}
 body{
+  height: 100%;
   background: #f8f9fa !important;
 }
+
 .page-link {
   color: #198754 !important;
   cursor: pointer;
@@ -53,6 +58,27 @@ body{
   height:250px;
   background-size:cover;
   background-position:center
+}
+.license-row{
+  position: relative;
+    vertical-align: top;
+    padding: 0 40px 0 0;
+    text-align: left;
+    font-weight: inherit;
+    color: #7A8F9B;
+}
+.license-row::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 17px;
+    display: block;
+    height: 1px;
+    background-image: linear-gradient(to right,#bcc7cd,#bcc7cd 1px,transparent 1px,transparent);
+    background-size: 3px 1px;
+    background-repeat: repeat-x;
+    background-position: left center;
 }
 @media (max-width: 992px) {
   .News-Img {

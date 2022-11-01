@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import publicationDetailsImg from "../../../Assets/Images/publication-details.jpg";
 import CreateComment from "../../UI/CreateComment/CreateComment";
-import PublicationsList from "../Publications/PublicationsList/PublicationsList";
+import PublicationsList from "../../UI/PublicationsList/PublicationsList";
 import PublicationComments from "./PublicationComments/PublicationComments";
 import api from "../../../Services/api";
 import {useState} from "react";
@@ -46,6 +46,7 @@ function PublicationDetails() {
                     (_, i) => i + 1
                 )
             );
+            setSavedComment(false)
         });
     },[page, savedComment])
 

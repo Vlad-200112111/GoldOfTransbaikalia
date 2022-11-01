@@ -2,6 +2,7 @@ import CustomTable from "../../UI/CustomTable/CustomTable";
 import {useEffect, useState} from "react";
 import api from "../../../Services/api";
 import CustomPagination from "../../UI/CustomPagination/CustomPagination";
+import { Link } from "react-router-dom";
 
 function Licenses() {
 
@@ -11,6 +12,7 @@ function Licenses() {
     const [pages, setPages] = useState([]);
     const limit = 20
 
+    
     const getLicenses = async (page= 1) => {
         const {data: Licenses} = await api.Licenses.getListLicenses(page)
         return Licenses
@@ -85,7 +87,9 @@ function Licenses() {
                                         <td>{license.name}</td>
                                         <td>{license.end_date}</td>
                                         <td>
+                                            <Link to={`/licenses-details/${license.id}`}>
                                             <button type="button" className="btn btn-success">Подробнее</button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 )
