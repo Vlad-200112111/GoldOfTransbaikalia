@@ -46,6 +46,7 @@ function PublicationDetails() {
                     (_, i) => i + 1
                 )
             );
+            setSavedComment(false)
         });
     },[page, savedComment])
 
