@@ -82,12 +82,12 @@ class CommentsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class LicensesListAPIView(generics.ListAPIView):
     serializer_class = LicensesSerializer
     permission_classes = (permissions.AllowAny,)
-    queryset = License.objects.all()
 
-    def get(self, request, *args, **kwargs):
-        licenses = License.objects.all()
-        results = self.paginate_queryset(licenses)
-        return self.get_paginated_response(LicensesSerializer(results, many=True).data)
+    def get_queryset(self):
+        queryset = License.objects.all()
+        name = self.request.query_params.get('name') if self.request.query_params.get('name') is not None else ''
+        queryset = queryset.filter(name__contains=name.upper())
+        return queryset
     
 class LicensesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.AllowAny,)

@@ -8,18 +8,47 @@ function Licenses() {
 
     const TableHead = ['№', 'Название организации', 'Дата окончания', '']
     const [listLicenses, setListLicenses] = useState([])
+    const [searchLicenseValue, setSearchLicenseValue] = useState('')
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState([]);
     const limit = 20
 
     
-    const getLicenses = async (page= 1) => {
-        const {data: Licenses} = await api.Licenses.getListLicenses(page)
+    const getLicenses = async (name='',page= 1) => {
+        const {data: Licenses} = await api.Licenses.getListLicenses(name,page)
         return Licenses
     }
+    const searchLicense = async (e) =>{
+        e.preventDefault()
+        getLicenses(searchLicenseValue, 1).then(Licenses=>{
+            setListLicenses(Licenses)
+            setPages(
+
+                Array.from(
+                    {length: Math.ceil(Licenses.count / limit)},
+                    (_, i) => i + 1
+                )
+            );
+        })
+    }
+    const resetSearch = (event) => {
+        if(event.keyCode === 8 || event.keyCode === 46){
+            getLicenses().then((Licenses)=>{
+            setListLicenses(Licenses)
+            setPages(
+              Array.from(
+                { length: Math.ceil(Licenses.count / limit) },
+                (_, i) => i + 1
+              )
+            );
+            setPage(1)
+          })
+        }
+        
+      }
 
     useEffect(() => {
-            getLicenses(page).then((Licenses) => {
+            getLicenses('',page).then((Licenses) => {
                     setListLicenses(Licenses)
 
                     setPages(
@@ -56,12 +85,15 @@ function Licenses() {
                         <form class="d-flex">
                             <input
                                 class="border-success form-control me-2"
-                                type="search"
-                                placeholder="Search"
+                                type="text"
+                                onKeyDown={resetSearch} 
+                                placeholder="Поиск"
+                                value={searchLicenseValue}
+                                onChange={(ev)=>setSearchLicenseValue(ev.target.value)}
                                 aria-label="Search"
                             />
-                            <button class="btn btn-outline-success" type="submit">
-                                Search
+                            <button onClick={searchLicense}  class="btn btn-outline-success">
+                                Поиск
                             </button>
                         </form>
                     </div>

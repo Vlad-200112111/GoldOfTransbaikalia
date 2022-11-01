@@ -2,7 +2,7 @@ import axios from "../axios/axios";
 
 
 const endpoints = {
-    getListLicenses: (page) => axios.get(`licenses/?page=${page}`),
+    getListLicenses: (name,page) => axios.get(`licenses/?name=${name}&page=${page}`),
     getLicenseById: (id) => axios.get(`licenses/${id}`)
 };
 
